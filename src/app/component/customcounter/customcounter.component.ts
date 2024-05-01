@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CounterModel } from '../../shared/store/counter.model';
 import {Subscription} from 'rxjs'
 import { getchannelname } from '../../shared/store/counter.selector';
+import { AppStateModel } from '../../shared/store/Global/AppState.Model';
 
 @Component({
   selector: 'app-customcounter',
@@ -18,7 +19,7 @@ export class CustomcounterComponent {
   actiontype:string='add';
   channelName:string = '';
   counterSubscribe !: Subscription;
-  constructor(private store: Store<{counter:CounterModel}>) { }
+  constructor(private store: Store<AppStateModel>) { }
 
   ngOnInit(): void {
     this.counterSubscribe = this.store.select(getchannelname).subscribe(data=> {

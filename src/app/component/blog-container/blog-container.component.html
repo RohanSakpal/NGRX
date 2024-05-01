@@ -1,0 +1,24 @@
+<div class="container">
+    <button class="btn" (click)="openPopup()">Add Item</button>
+    @for (blog of bloglist; track blog) {
+    <div class="list">
+        <h1>{{blog.title}}</h1>
+        <p>{{blog.description}}</p>
+        <button class="btn" (click)="edit(blog.id)">Update</button>
+        <button class="btn" (click)="delete(blog.id)">Delete</button>
+    </div>
+    }
+    @if(showPopup) {
+    <div class="form">
+        <h1>Add Blog</h1>
+        <form action="" [formGroup]="blogForm">
+            <input type="text" formControlName="title">
+            <input type="text" formControlName="description">
+            <div class="buttons">
+                <button type="submit" class="btn" (click)="save()" [disabled]="blogForm.invalid">Save</button>
+                <button type="button" class="btn" (click)="openPopup()">close</button>
+            </div>
+        </form>
+    </div>
+    }
+</div>

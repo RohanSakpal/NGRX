@@ -1,0 +1,12 @@
+nav {
+    height: 50px;
+    border-bottom: 1px solid;
+}
+ul {
+    display: flex;
+    justify-content: space-around;
+}
+li {
+    list-style: none;
+    cursor: pointer;
+}
