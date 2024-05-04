@@ -6,6 +6,7 @@ import { AppStateModel } from '../../shared/store/Global/AppState.Model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { addblog, deleteblog, loadblog, updateblog } from '../../shared/store/Blog/Blog.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-container',
@@ -19,7 +20,8 @@ export class BlogContainerComponent {
   bloginfo !: Blogs;
   showPopup : boolean = false;
   isEdit:boolean = false;
- constructor(private store:Store<AppStateModel>, private builder:FormBuilder
+ constructor(private store:Store<AppStateModel>, private builder:FormBuilder,
+  private router:Router
  ) {}
 
  blogForm = this.builder.group({
@@ -63,6 +65,8 @@ export class BlogContainerComponent {
  }
 
  edit(id:number) {
+this.router.navigate(['blog/edit/'+id])
+  return false;
   this.isEdit = true;
   this.showPopup = true;
   this.store.select(getblogbyid(id)).subscribe(_data => {
