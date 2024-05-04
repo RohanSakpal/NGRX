@@ -33,3 +33,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 npm i @ngrx/store
 
 ng add @ngrx/store-devtools@latest
+
+To Run JSON File : json-server --watch db.json

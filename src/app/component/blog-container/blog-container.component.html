@@ -1,6 +1,12 @@
 <div class="container">
     <button class="btn" (click)="openPopup()">Add Item</button>
-    @for (blog of bloglist; track blog) {
+    @if(bloginfo.bloglist.length == 0) {
+    <div class="form">
+        <h1 class="err">No Record Found!</h1>
+    </div>
+    }
+    @if(bloginfo.Errormessage == '') {
+    @for (blog of bloginfo.bloglist; track blog) {
     <div class="list">
         <h1>{{blog.title}}</h1>
         <p>{{blog.description}}</p>
@@ -19,6 +25,13 @@
                 <button type="button" class="btn" (click)="openPopup()">close</button>
             </div>
         </form>
+    </div>
+    }
+    }
+    @if(bloginfo.Errormessage !== '') {
+    <div class="form">
+        <h1>Error</h1>
+        <p class="err">{{bloginfo.Errormessage}}</p>
     </div>
     }
 </div>

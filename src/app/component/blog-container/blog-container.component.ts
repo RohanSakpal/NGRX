@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BlogModel } from '../../shared/store/Blog/Blog.model';
-import { getblog, getblogbyid } from '../../shared/store/Blog/Blog.selectors';
+import { BlogModel, Blogs } from '../../shared/store/Blog/Blog.model';
+import { getblog, getblogbyid, getbloginfo } from '../../shared/store/Blog/Blog.selectors';
 import { AppStateModel } from '../../shared/store/Global/AppState.Model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { addblog, deleteblog, updateblog } from '../../shared/store/Blog/Blog.actions';
+import { addblog, deleteblog, loadblog, updateblog } from '../../shared/store/Blog/Blog.actions';
 
 @Component({
   selector: 'app-blog-container',
@@ -16,6 +16,7 @@ import { addblog, deleteblog, updateblog } from '../../shared/store/Blog/Blog.ac
 })
 export class BlogContainerComponent {
   bloglist !: BlogModel[];
+  bloginfo !: Blogs;
   showPopup : boolean = false;
   isEdit:boolean = false;
  constructor(private store:Store<AppStateModel>, private builder:FormBuilder
@@ -28,8 +29,10 @@ export class BlogContainerComponent {
  })
 
  ngOnInit() {
-  this.store.select(getblog).subscribe(item=> {
-    this.bloglist = item;
+  this.store.dispatch(loadblog());
+  this.store.select(getbloginfo).subscribe(item=> {
+    //this.bloglist = item;
+    this.bloginfo = item;
   })
  }
 

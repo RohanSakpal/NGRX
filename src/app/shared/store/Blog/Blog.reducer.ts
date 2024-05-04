@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { BlogState } from "./Blog.state";
-import { addblog, deleteblog, loadblog, updateblog } from "./Blog.actions";
+import { addblog, addblogsuccess, deleteblog, deleteblogsuccess, loadblog, loadblogerror, loadblogsuccess, updateblog, updateblogsuccess } from "./Blog.actions";
 import { BlogModel } from "./Blog.model";
 
 const _blogReducer = createReducer(BlogState, on(loadblog,(state)=>{
@@ -8,15 +8,36 @@ const _blogReducer = createReducer(BlogState, on(loadblog,(state)=>{
         ...state,
     };
 }),
-on(addblog, (state,action) => {
+on(loadblogsuccess, (state,action) => {
+    return {
+        ...state,
+        bloglist:[...action.bloglist],
+        Errormessage:''
+    }
+}),
+on(loadblogerror, (state,action) => {
+    return {
+        ...state,
+        bloglist:[],
+        Errormessage:action.Errortext
+    }
+}),
+// on(addblog, (state,action) => {
+//     const _blog = {...action.bloginput};
+//     _blog.id = state.bloglist.length+1;
+//     return {
+//         ...state,
+//         bloglist:[...state.bloglist,_blog]
+//     }
+// }),
+on(addblogsuccess,(state,action) => {
     const _blog = {...action.bloginput};
-    _blog.id = state.bloglist.length+1;
     return {
         ...state,
         bloglist:[...state.bloglist,_blog]
     }
 }),
-on(updateblog, (state,action) => {
+on(updateblogsuccess, (state,action) => {
     const _blog = {...action.bloginput};
     const updatedblog = state.bloglist.map(blog=>{
         return _blog.id === blog.id?_blog:blog;
@@ -26,7 +47,7 @@ on(updateblog, (state,action) => {
         bloglist:updatedblog
     }
 }),
-on(deleteblog, (state,action) => {
+on(deleteblogsuccess, (state,action) => {
     const updatedblog = state.bloglist.filter((blog:BlogModel)=>{
         return blog.id !== action.id;
     })
